@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Charts</title>
+		<script type="text/javascript" src="../res/echarts.js"></script>
+	</head>
+	<body>
+		<div id="main" style="widtd=600px;height=400px;"></div>
+		<script type="text/javascript">
+		var a,b,c,d,e,f,g;
+		a=10;
+		b=15;
+		c=20;
+		d=30;
+		e=40;
+		f=50;
+		g=20;
+			var mychart = echarts.init(document.getElementById('main'));
+			var option = {
+				title :{
+					text:'Network'
+				},
+				tooltip:{},
+				legend:{
+					data:['avgTimedelay','bandwidthRate']
+				},
+				xAxis:{
+					data:['A','B','C','D','E']
+				},
+				yAxis:{},
+				series:[
+					{
+						name:'timeDelay',
+						type:'bar',
+						data:[a,b,c,d,e]
+					}
+				]
+			}
+			mychart.setOption(option);
+
+			setInterval(function(){
+				a = a + 5;
+				b = b - 5;
+				c = c + 5;
+				option.series[0].data=[a,b,c,d,e];
+				mychart.setOption(option);
+			},3000);
+			
+						
+		</script>
+	</body>
+</html>
