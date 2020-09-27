@@ -12,9 +12,9 @@ import jpcap.packet.ICMPPacket;
 import jpcap.packet.Packet;
 
 /**
- * ½ÓÊÕ±¨ÎÄÏß³Ì
+ * æ¥æ”¶æŠ¥æ–‡çº¿ç¨‹
  * @author LiH
- * 2018Äê1ÔÂ19ÈÕ ÏÂÎç3:29:04
+ * 2018å¹´1æœˆ19æ—¥ ä¸‹åˆ3:29:04
  */
 public class IcmpReceiveThread extends Thread {
 	private JpcapCaptor captor;
@@ -27,6 +27,9 @@ public class IcmpReceiveThread extends Thread {
 		try {
 			captor = JpcapCaptor.openDevice(network, 20000, false, 1);
 			captor.setFilter("icmp", true);
+			// è®¾ç½®å¤šä¸ªfilter ä¸º orçš„å…³ç³»
+			// è®¾ç½®å¤šä¸ªç»„åˆå…³ç³»
+			// captor.setFilter("tcp and port 830 and dst 192.169.1.13", true);
 		} catch (IOException e) {
 			Logger.log(e.getMessage());
 			e.printStackTrace();
@@ -53,17 +56,17 @@ public class IcmpReceiveThread extends Thread {
 			if(pk instanceof ICMPPacket){
 				ICMPPacket packet = (ICMPPacket) pk;
 				if(IcmpUtil.checkData(packet)){
-					//½ÓÊÕ
+					//æ¥æ”¶
 					if (packet.type == ICMPPacket.ICMP_ECHOREPLY) {
 						DataContainer.getContainer().putRes(packet);
 					}
-					//·¢ËÍ
+					//å‘é€
 					if(packet.type == ICMPPacket.ICMP_ECHO){
 						DataContainer.getContainer().putReq(packet);
 					}
 				}else{
 					if(((ICMPPacket) pk).type == 8 || ((ICMPPacket) pk).type == 0){
-						Logger.log("´íÎóµÄ°ü£º"+pk);
+						Logger.log("é”™è¯¯çš„åŒ…ï¼š"+pk);
 					}
 				}
 			}
